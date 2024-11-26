@@ -3,7 +3,12 @@ public class Book {
     private String title;
     private boolean available;
 
-    public Book(int id, String title) {
+    public Book(int id, String title)throws Exception {
+    
+         ///task2 Q1
+    	if (!isValidId(id)) {
+    		throw new Exception("invalid Book ID: " + id + ", needs to be between 100 and 999");
+    	}
         this.id = id;
         this.title = title;
         this.available = true;
@@ -22,6 +27,7 @@ public class Book {
         return available;
     }
 
+    
     // Method to borrow the book
     public void borrowBook() {
         if (available) {
