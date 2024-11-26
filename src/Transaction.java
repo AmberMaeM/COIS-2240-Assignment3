@@ -1,8 +1,10 @@
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.BufferedWriter;
+import java.io.BufferedWriter;// to write in save transactions
 import java.io.FileWriter;
+import java.io.BufferedReader;//to read in display transaction details
+import java.io.FileReader;
 import java.io.IOException;
 
 public class Transaction {
@@ -64,6 +66,34 @@ public class Transaction {
     		System.out.println("Error:"+e.getMessage());
     	}
     }
+    
+    
+    ////Q3
+    public static void displayTransactionHistory() {
+    	String transactionDetails = null;
+    	
+    	try(BufferedReader reader = new BufferedReader(new FileReader("transaction.txt"))){//using true makes sure i dont overwrite the file
+    		//String transactionDetails;
+    		boolean hasTransactions = false;
+           	System.out.println("\n--- Transaction History ---");
+           	
+           	transactionDetails = reader.readLine(); //reading the first line
+           	
+           	while(transactionDetails != null) {//while txt isnt empty
+           		System.out.println(transactionDetails);//priuntout details
+           		hasTransactions =true;
+           		transactionDetails= reader.readLine();//next line
+           		
+           	}
+           	if (!hasTransactions) {//if it is empty send messages
+           		System.out.println("no history found");
+           	}
+           	
+    	}catch (IOException e) {
+    		System.out.println("Error:"+e.getMessage());
+    	}
+    }
+    
     
     
     
