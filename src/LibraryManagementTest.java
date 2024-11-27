@@ -1,8 +1,60 @@
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.Before;//for setup annotation
+import org.junit.Test;// for test annotation
 
 public class LibraryManagementTest {
+	private Book book;
+	private Member member;
+	private Transaction transaction;
+	
+	@Before
+	public void setUp() { 
+		//creating book,member and transaction for testing
+		try {
+			book = new Book(100,"BookTest");
+			member = new Member (1,"MemberTest");
+			transaction = Transaction.getTransaction();
+		}catch(Exception e) {
+			fail("Exception shouldnt be thrown for valid book ID"+ e.getMessage());
+		}
+		
+		
+	
+	}
+	
+	@Test
+	public void testBorrowReturn() {
+		//make sure book is available at start
+		assertTrue("Book should be available", book.isAvailable());
+		
+		
+		//borrow the book and assert that it is unavailable
+		boolean borrowSuccess = transaction.borrowBook(book, member);
+		assertTrue("Borrowing should be successful",borrowSuccess);	
+		assertFalse("Book should be unavailable after borrowing", book.isAvailable());
+		
+		//make sure when book is borrowed, it fails
+		boolean borrowFail = transaction.borrowBook(book, member);
+		assertFalse("Borrowing for an already borrowed book should fail",borrowFail);
+		
+		
+		
+		//return book and make sure its availabe again
+		boolean returnSuccess = transaction.returnBook(book,member);
+		assertTrue("return should be successful", returnSuccess);
+		assertTrue("Book should be available after returning",book.isAvailable());
+		
+		//try to return book again and make sure it fails. to should book is not borrowed.
+		boolean returnFail = transaction.returnBook(book,member);
+		assertFalse("returning should fail if the book isnt borrowed",returnFail);
+		
+	}
+	
+	
+	
+	
+	
 // my understanding of junit4 assertions comes from https://www.baeldung.com/junit-assertions
 	@Test
 	public void testBookId() {
@@ -32,6 +84,7 @@ public class LibraryManagementTest {
 		}catch(Exception e){
 			fail("exception shouldnt be thrown for valid IDs");
 		}
+		
 		
 	}
 
