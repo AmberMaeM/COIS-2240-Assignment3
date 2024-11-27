@@ -10,3 +10,7 @@ ambermae
 2024-11-26 21:51:31 - Returning: MemberTest returned BookTest
 2024-11-26 22:15:13 - Borrowing: MemberTest borrowed BookTest
 2024-11-26 22:15:13 - Returning: MemberTest returned BookTest
+2024-11-27 00:29:21 - Borrowing: MemberTest borrowed BookTest
+2024-11-27 00:29:21 - Returning: MemberTest returned BookTest
+2024-11-27 01:08:21 - Borrowing: MemberTest borrowed BookTest
+2024-11-27 01:08:21 - Returning: MemberTest returned BookTest

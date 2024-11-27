@@ -3,12 +3,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;//for setup annotation
 import org.junit.Test;// for test annotation
 
+import java.lang.reflect.Constructor;//for task2 Q3
+import java.lang.reflect.Modifier;//for task2 Q3
+
 public class LibraryManagementTest {
 	private Book book;
 	private Member member;
 	private Transaction transaction;
 	
-	@Before
+	
+	@Before  /////task3 Q2
 	public void setUp() { 
 		//creating book,member and transaction for testing
 		try {
@@ -23,8 +27,10 @@ public class LibraryManagementTest {
 	
 	}
 	
-	@Test
+	@Test  ///task3 Q2
 	public void testBorrowReturn() {
+		//source for assurttrue/false https://stackoverflow.com/questions/3241105/java-junit-asserttrue-vs-assertfalse
+		
 		//make sure book is available at start
 		assertTrue("Book should be available", book.isAvailable());
 		
@@ -56,7 +62,7 @@ public class LibraryManagementTest {
 	
 	
 // my understanding of junit4 assertions comes from https://www.baeldung.com/junit-assertions
-	@Test
+	@Test ///task 3 Q1
 	public void testBookId() {
 		try {
 			Book book1 = new Book(100, "Book1");
@@ -87,5 +93,23 @@ public class LibraryManagementTest {
 		
 		
 	}
+	
+	
+	@Test  ///task3 Q3
+	public void testSingletonTransaction() throws Exception{
+		try {
+			//grabs the constructor of the transaction class using reflec tion
+			Constructor<Transaction> constructor = Transaction.class.getDeclaredConstructor();
+			//makes sure coonstructor is private
+			int modifiers = constructor.getModifiers();
+			//checks if modifier is  private
+			assertTrue("the transaction constructor should be private", Modifier.isPrivate(modifiers));
+			
+		}catch(NoSuchMethodException e){//this exception happens when the constructor youre trying to get theough reflection isnt found
+			fail("transaction class should have a private constructor. Error: "+ e.getMessage());
+		}
+	}
+	
+	
 
 }
